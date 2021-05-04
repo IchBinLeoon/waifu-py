@@ -34,14 +34,15 @@ class APIException(WaifuException):
     Exception due to an error response from the waifu.pics API.
     """
 
-    def __init__(self, status: int) -> None:
+    def __init__(self, status: int, reason: str) -> None:
         """
         Initializes the APIException.
 
         Args:
-            status (int): The status code.
+            status (int): HTTP status code of the response.
+            reason (str): HTTP status reason of the response.
         """
-        super().__init__(f'Status {str(status)}')
+        super().__init__(f'{status} {reason}')
 
 
 class InvalidCategory(WaifuException):

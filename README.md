@@ -14,8 +14,15 @@ A simple Python wrapper for the waifu.pics API.
 
 ## Installation
 **Python 3.6 or higher is required.**
+
+Install from PyPI
 ```shell
 $ pip install waifu-py
+```
+
+Install from source
+```shell
+$ pip install git+https://github.com/IchBinLeoon/waifu-py
 ```
 
 ## Usage
@@ -27,13 +34,16 @@ from waifu import WaifuClient
 
 client = WaifuClient()
 
-# Get a SFW image
+# Get one SFW image
 sfw_waifu: str = client.sfw(category='waifu')
 
 # Get 30 unique SFW images
 sfw_megumin_list: list = client.sfw(category='megumin', many=True)
 
-# Get a NSFW image
+# Get 30 unique SFW images and exclude images in list
+sfw_megumin_list_exclude: list = client.sfw(category='megumin', many=True, exclude=['https://i.waifu.pics/IqD8csE.png', 'https://i.waifu.pics/NV-dfTH.png'])
+
+# Get one NSFW image
 nsfw_neko: str = client.nsfw(category='neko')
 
 # Get 30 unique NSFW images
@@ -50,13 +60,13 @@ from waifu import WaifuAioClient
 async def main():
     async with WaifuAioClient() as client:
 
-        # Get a SFW image
+        # Get one SFW image
         sfw_neko: str = await client.sfw(category='neko')
 
         # Get 30 unique SFW images
         sfw_shinobu_list: list = await client.sfw(category='shinobu', many=True)
 
-        # Get a NSFW image
+        # Get one NSFW image
         nsfw_waifu: str = await client.nsfw(category='waifu')
 
         # Get 30 unique NSFW images
@@ -73,7 +83,7 @@ from waifu import WaifuAioClient
 async def main():
     client = WaifuAioClient()
 
-    # Get a SFW image
+    # Get one SFW image
     sfw_waifu: str = await client.sfw(category='waifu')
 
     # Get 30 unique NSFW images

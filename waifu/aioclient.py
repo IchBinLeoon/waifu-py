@@ -93,9 +93,9 @@ class WaifuAioClient:
         """
         session = await self._session()
         response = await getattr(session, method)(url, *args, **kwargs)
-        log.debug(f'{method.upper()} {url} returned status code {str(response.status)}')
+        log.debug(f'{method.upper()} {url} {response.status} {response.reason}')
         if response.status != 200:
-            raise APIException(response.status)
+            raise APIException(response.status, response.reason)
         data = await response.json()
         return data
 
@@ -127,8 +127,8 @@ class WaifuAioClient:
         self,
         type_: str,
         category: str,
-        many: Optional[bool] = False,
-        exclude: Optional[List[str]] = []
+        many: bool,
+        exclude: List[str]
     ) -> Union[str, List[str]]:
         """
         Returns a single or 30 unique images of the specific type and category.

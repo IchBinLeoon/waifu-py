@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-BASE_URL = 'https://waifu.pics/api'
+BASE_URL = 'https://api.waifu.pics'
 
 
 class ImageTypes:
