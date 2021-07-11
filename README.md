@@ -178,8 +178,9 @@ Output:
       "nom",
       "bite",
       "glomp",
+      "slap".
       "kill",
-      "slap",
+      "kick",
       "happy",
       "wink",
       "poke",

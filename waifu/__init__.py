@@ -28,4 +28,4 @@ from .utils import ImageCategories
 from .exceptions import *
 
 __author__ = 'IchBinLeoon'
-__version__ = '1.0.1'
+__version__ = '1.0.2'
