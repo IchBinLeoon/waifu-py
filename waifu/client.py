@@ -34,48 +34,30 @@ log = logging.getLogger(__name__)
 
 
 class WaifuClient:
-    """
-    Wrapper client for the waifu.pics API.
+    """Wrapper client for the waifu.pics API.
+
     This class is used to interact with the API.
 
     Attributes:
-        session (requests.Session): A requests session.
+        session: A requests session.
     """
 
     def __init__(self, session: Optional[requests.Session] = None) -> None:
-        """
-        Initializes the WaifuClient.
+        """Initializes the WaifuClient.
 
         Args:
-            session (requests.Session, optional): A requests session.
+            session: A requests session.
         """
         self.session = session
 
     def _session(self) -> requests.Session:
-        """
-        Gets a requests session by creating it if it does not already exist.
-
-        Returns:
-            requests.Session: A requests session.
-        """
+        """Gets a requests session by creating it if it does not already exist."""
         if self.session is None:
             self.session = requests.Session()
         return self.session
 
     def _request(self, url: str, method: str, *args, **kwargs) -> Dict[str, str]:
-        """
-        Performs an HTTP request.
-
-        Args:
-            url (str): The request url.
-            method (str): The request method.
-
-        Returns:
-            dict: The data from the response.
-
-        Raises:
-            APIException: If the response contains an error.
-        """
+        """Performs an HTTP request."""
         session = self._session()
         response = getattr(session, method)(url, *args, **kwargs)
         log.debug(f'{method.upper()} {url} {response.status_code} {response.reason}')
@@ -85,27 +67,11 @@ class WaifuClient:
         return data
 
     def _get(self, url: str, *args, **kwargs) -> _request:
-        """
-        Performs an HTTP GET request.
-
-        Args:
-            url (str): The request url.
-
-        Returns:
-            _request()
-        """
+        """Performs an HTTP GET request."""
         return self._request(url, 'get', *args, **kwargs)
 
     def _post(self, url: str, *args, **kwargs) -> _request:
-        """
-        Performs an HTTP POST request.
-
-        Args:
-            url (str): The request url.
-
-        Returns:
-            _request()
-        """
+        """Performs an HTTP POST request."""
         return self._request(url, 'post', *args, **kwargs)
 
     def _fetch(
@@ -115,22 +81,7 @@ class WaifuClient:
         many: bool,
         exclude: List[str]
     ) -> Union[str, List[str]]:
-        """
-        Returns a single or 30 unique images of the specific type and category.
-
-        Args:
-            type_ (str): The type of the image.
-            category (str): The category of the image.
-            many (bool): Get 30 unique images instead of one if true.
-            exclude (list): A list of URL's to not receive from the endpoint if many is true.
-
-        Returns:
-            str: The image URL.
-            list: 30 unique image URL's if many is true.
-
-        Raises:
-            InvalidCategory: If the category is invalid.
-        """
+        """Returns a single or 30 unique images of the specific type and category."""
         if category not in ImageCategories[type_]:
             raise InvalidCategory(category)
         if many is True:
@@ -147,17 +98,19 @@ class WaifuClient:
         many: Optional[bool] = False,
         exclude: Optional[List[str]] = []
     ) -> Union[str, List[str]]:
-        """
-        Get a single or 30 unique SFW (Safe For Work) images of the specific category.
+        """Gets a single or 30 unique SFW (Safe For Work) images of the specific category.
 
         Args:
-            category (str): The category of the image.
-            many (bool): Get 30 unique images instead of one if true.
-            exclude (list): A list of URL's to not receive from the endpoint if many is true.
+            category: The category of the image.
+            many: Get 30 unique images instead of one if true.
+            exclude: A list of URL's to not receive from the endpoint if many is true.
 
         Returns:
-            str: The image URL.
-            list: 30 unique image URL's if many is true.
+            A single or 30 unique image URL's.
+
+        Raises:
+            APIException: If the API response contains an error.
+            InvalidCategory: If the category is invalid.
         """
         data = self._fetch(ImageTypes.sfw, category, many, exclude)
         return data
@@ -168,17 +121,19 @@ class WaifuClient:
         many: Optional[bool] = False,
         exclude: Optional[List[str]] = []
     ) -> Union[str, List[str]]:
-        """
-        Get a single or 30 unique NSFW (Not Safe For Work) images of the specific category.
+        """Gets a single or 30 unique NSFW (Not Safe For Work) images of the specific category.
 
         Args:
-            category (str): The category of the image.
-            many (bool): Get 30 unique images instead of one if true.
-            exclude (list): A list of URL's to not receive from the endpoint if many is true.
+            category: The category of the image.
+            many: Get 30 unique images instead of one if true.
+            exclude: A list of URL's to not receive from the endpoint if many is true.
 
         Returns:
-            str: The image URL.
-            list: 30 unique image URL's if many is true.
+            A single or 30 unique image URL's.
+
+        Raises:
+            APIException: If the API response contains an error.
+            InvalidCategory: If the category is invalid.
         """
         data = self._fetch(ImageTypes.nsfw, category, many, exclude)
         return data

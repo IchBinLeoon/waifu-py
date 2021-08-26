@@ -24,37 +24,29 @@ SOFTWARE.
 
 
 class WaifuException(Exception):
-    """
-    Base exception class for the waifu.pics API wrapper.
-    """
+    """Base exception class for the waifu.pics API wrapper."""
 
 
 class APIException(WaifuException):
-    """
-    Exception due to an error response from the waifu.pics API.
-    """
+    """Exception due to an error response from the waifu.pics API."""
 
     def __init__(self, status: int, reason: str) -> None:
-        """
-        Initializes the APIException.
+        """Initializes the APIException.
 
         Args:
-            status (int): HTTP status code of the response.
-            reason (str): HTTP status reason of the response.
+            status: HTTP status code of the response.
+            reason: HTTP status reason of the response.
         """
         super().__init__(f'{status} {reason}')
 
 
 class InvalidCategory(WaifuException):
-    """
-    Exception due to an invalid image category.
-    """
+    """Exception due to an invalid image category."""
 
     def __init__(self, category: str) -> None:
-        """
-        Initializes the InvalidCategory exception.
+        """Initializes the InvalidCategory exception.
 
         Args:
-            category (str): The invalid category.
+            category: The invalid category.
         """
         super().__init__(f"Category '{category}' is invalid")
