@@ -73,7 +73,7 @@ class WaifuAioClient:
         response = await getattr(session, method)(url, *args, **kwargs)
         log.debug(f'{method.upper()} {url} {response.status} {response.reason}')
         if response.status != 200:
-            raise APIException(response.status, response.reason)
+            raise APIException(response.status, response.reason, (await response.json()).get('message'))
         data = await response.json()
         return data
 
@@ -107,7 +107,7 @@ class WaifuAioClient:
         self,
         category: str,
         many: Optional[bool] = False,
-        exclude: Optional[List[str]] = []
+        exclude: Optional[List[str]] = None
     ) -> Union[str, List[str]]:
         """Gets a single or 30 unique SFW (Safe For Work) images of the specific category.
 
@@ -130,7 +130,7 @@ class WaifuAioClient:
         self,
         category: str,
         many: Optional[bool] = False,
-        exclude: Optional[List[str]] = []
+        exclude: Optional[List[str]] = None
     ) -> Union[str, List[str]]:
         """Gets a single or 30 unique NSFW (Not Safe For Work) images of the specific category.
 
